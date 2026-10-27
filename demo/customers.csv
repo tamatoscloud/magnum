@@ -1,0 +1,5 @@
+customer_name,folio_number,email,phone_number,pdf_filename
+"Ahmed Khan","MAG001245","ahmed.khan@example.com","+923001234567","MAG001245.pdf"
+"Sara Ali","MAG001246","sara.ali@example.com","","MAG001246.pdf"
+"Bilal Hussain","001245","","+923331112233","001245.pdf"
+"Hina Noor","MAG001248","","","MAG001248.pdf"

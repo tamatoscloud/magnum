@@ -1,0 +1,437 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  OPERATOR
+}
+
+enum BatchStatus {
+  UPLOADED
+  VALIDATING
+  READY
+  PROCESSING
+  COMPLETED
+  COMPLETED_WITH_ERRORS
+  FAILED
+  CANCELLED
+}
+
+enum IssueSeverity {
+  ERROR
+  WARNING
+}
+
+enum DocumentProcessingStatus {
+  PENDING
+  PROCESSING
+  ENCRYPTED
+  FAILED
+  QUARANTINED
+}
+
+enum EncryptionStatus {
+  PENDING
+  ENCRYPTED
+  FAILED
+  SKIPPED
+}
+
+enum LinkStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum DeliveryChannel {
+  EMAIL
+  WHATSAPP
+}
+
+enum DeliveryStatus {
+  QUEUED
+  SENT
+  DELIVERED
+  FAILED
+  UNKNOWN
+  MOCK_RECORDED
+}
+
+enum ActorType {
+  ADMIN
+  CUSTOMER
+  SYSTEM
+  WEBHOOK
+}
+
+enum CampaignStatus {
+  DRAFT
+  VALIDATING
+  READY
+  ACTIVE
+  REVOKED
+  COMPLETED
+}
+
+model AdminUser {
+  id                  String               @id @default(cuid())
+  name                String
+  email               String               @unique
+  passwordHash        String
+  role                AdminRole
+  isActive            Boolean              @default(true)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  batches             ImportBatch[]
+  campaigns           ReportCampaign[]
+  revokedLinks        AccessLink[]         @relation("LinkRevokedBy")
+  passwordResets      PasswordResetToken[]
+  exports             ExportFile[]
+  settingsUpdates     AppSetting[]         @relation("SettingUpdatedBy")
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model ImportBatch {
+  id                  String            @id @default(cuid())
+  batchName           String
+  status              BatchStatus       @default(UPLOADED)
+  originalCsvFilename String
+  originalZipFilename String
+  csvStorageKey       String
+  zipStorageKey       String
+  columnMapping       Json?
+  totalRecords        Int               @default(0)
+  validRecords        Int               @default(0)
+  invalidRecords      Int               @default(0)
+  processedRecords    Int               @default(0)
+  failedRecords       Int               @default(0)
+  linkExpiryDays      Int
+  notifyEmail         Boolean           @default(true)
+  notifyWhatsapp      Boolean           @default(true)
+  createdById         String
+  createdBy           AdminUser         @relation(fields: [createdById], references: [id])
+  createdAt           DateTime          @default(now())
+  startedAt           DateTime?
+  completedAt         DateTime?
+  errorSummary        String?
+  customers           Customer[]
+  importRows          ImportRow[]
+  validationIssues    ValidationIssue[]
+  exports             ExportFile[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([createdById])
+}
+
+model ImportRow {
+  id                     String      @id @default(cuid())
+  batchId                String
+  batch                  ImportBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  rowNumber              Int
+  customerName           String
+  normalizedCustomerName String
+  folioNumber            String
+  normalizedFolioNumber  String
+  email                  String?
+  phoneNumber            String?
+  sourcePdfFilename      String
+  zipEntryName           String?
+  isValid                Boolean
+  createdAt              DateTime    @default(now())
+
+  @@unique([batchId, rowNumber])
+  @@index([batchId, isValid])
+  @@index([batchId, normalizedFolioNumber])
+}
+
+model ValidationIssue {
+  id        String        @id @default(cuid())
+  batchId   String
+  batch     ImportBatch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  rowNumber Int?
+  field     String?
+  code      String
+  message   String
+  severity  IssueSeverity
+  createdAt DateTime      @default(now())
+
+  @@index([batchId, severity])
+}
+
+model Customer {
+  id                     String            @id @default(cuid())
+  batchId                String
+  batch                  ImportBatch       @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  customerName           String
+  normalizedCustomerName String
+  folioNumber            String
+  normalizedFolioNumber  String
+  email                  String?
+  phoneNumber            String?
+  sourcePdfFilename      String
+  zipEntryName           String?
+  rowNumber              Int
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  document               Document?
+  accessLinks            AccessLink[]
+  deliveries             DeliveryAttempt[]
+
+  @@unique([batchId, normalizedFolioNumber])
+  @@index([normalizedFolioNumber])
+  @@index([email])
+  @@index([phoneNumber])
+  @@index([batchId])
+}
+
+model Document {
+  id                  String                     @id @default(cuid())
+  customerId          String                     @unique
+  customer            Customer                   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  originalStorageKey  String?
+  encryptedStorageKey String?
+  originalSha256      String?
+  encryptedSha256     String?
+  fileSizeBytes       Int?
+  encryptedSizeBytes  Int?
+  processingStatus    DocumentProcessingStatus   @default(PENDING)
+  encryptionStatus    EncryptionStatus           @default(PENDING)
+  failureReason       String?
+  originalDeletedAt   DateTime?
+  encryptedDeletedAt  DateTime?
+  createdAt           DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
+
+  @@index([processingStatus])
+  @@index([encryptionStatus])
+}
+
+model AccessLink {
+  id              String                @id @default(cuid())
+  customerId      String
+  customer        Customer              @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tokenHash       String                @unique
+  tokenCiphertext String
+  status          LinkStatus            @default(ACTIVE)
+  expiresAt       DateTime
+  lastUsedAt      DateTime?
+  createdAt       DateTime              @default(now())
+  revokedAt       DateTime?
+  revokedById     String?
+  revokedBy       AdminUser?            @relation("LinkRevokedBy", fields: [revokedById], references: [id])
+  sessions        VerificationSession[]
+  deliveries      DeliveryAttempt[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([expiresAt])
+}
+
+model VerificationSession {
+  id               String     @id @default(cuid())
+  accessLinkId     String
+  accessLink       AccessLink @relation(fields: [accessLinkId], references: [id], onDelete: Cascade)
+  sessionTokenHash String     @unique
+  expiresAt        DateTime
+  failedAttempts   Int        @default(0)
+  createdAt        DateTime   @default(now())
+
+  @@index([accessLinkId])
+  @@index([expiresAt])
+}
+
+model DeliveryAttempt {
+  id                String          @id @default(cuid())
+  customerId        String
+  customer          Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  accessLinkId      String
+  accessLink        AccessLink      @relation(fields: [accessLinkId], references: [id], onDelete: Cascade)
+  channel           DeliveryChannel
+  status            DeliveryStatus  @default(QUEUED)
+  providerMessageId String?
+  attemptCount      Int             @default(0)
+  lastErrorCode     String?
+  idempotencyKey    String          @unique
+  isMock            Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([customerId, channel])
+  @@index([status])
+  @@index([providerMessageId])
+  @@index([accessLinkId])
+}
+
+model AuditLog {
+  id         String    @id @default(cuid())
+  actorType  ActorType
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  metadata   Json?
+  result     String
+  createdAt  DateTime  @default(now())
+
+  @@index([createdAt])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([actorId])
+}
+
+model AppSetting {
+  key         String     @id
+  value       Json
+  updatedAt   DateTime   @updatedAt
+  updatedById String?
+  updatedBy   AdminUser? @relation("SettingUpdatedBy", fields: [updatedById], references: [id])
+}
+
+model ReportCampaign {
+  id                   String                         @id @default(cuid())
+  name                 String
+  status               CampaignStatus                 @default(DRAFT)
+  sourceStorageKey     String?
+  sourceSha256         String?
+  sourceSizeBytes      Int?
+  sourceContentType    String?
+  tokenHash            String?                        @unique
+  tokenCiphertext      String?
+  csvStorageKey        String?
+  originalCsvFilename  String?
+  columnMapping        Json?
+  totalRecords         Int                            @default(0)
+  validRecords         Int                            @default(0)
+  invalidRecords       Int                            @default(0)
+  linkExpiryDays       Int
+  expiresAt            DateTime?
+  activatedAt          DateTime?
+  revokedAt            DateTime?
+  errorSummary         String?
+  createdById          String
+  createdBy            AdminUser                      @relation(fields: [createdById], references: [id])
+  createdAt            DateTime                       @default(now())
+  updatedAt            DateTime                       @updatedAt
+  members              CampaignMember[]
+  rows                 CampaignImportRow[]
+  issues               CampaignValidationIssue[]
+  sessions             CampaignVerificationSession[]
+  downloads            CampaignDownloadEvent[]
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([createdById])
+}
+
+model CampaignMember {
+  id                     String                        @id @default(cuid())
+  campaignId             String
+  campaign               ReportCampaign                @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  customerName           String
+  normalizedCustomerName String
+  folioNumber            String
+  normalizedFolioNumber  String
+  email                  String?
+  phoneNumber            String?
+  rowNumber              Int
+  createdAt              DateTime                      @default(now())
+  sessions               CampaignVerificationSession[]
+  downloads              CampaignDownloadEvent[]
+
+  @@unique([campaignId, normalizedFolioNumber])
+  @@index([campaignId])
+}
+
+model CampaignImportRow {
+  id                     String         @id @default(cuid())
+  campaignId             String
+  campaign               ReportCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  rowNumber              Int
+  customerName           String
+  normalizedCustomerName String
+  folioNumber            String
+  normalizedFolioNumber  String
+  email                  String?
+  phoneNumber            String?
+  isValid                Boolean
+  createdAt              DateTime       @default(now())
+
+  @@unique([campaignId, rowNumber])
+  @@index([campaignId, isValid])
+}
+
+model CampaignValidationIssue {
+  id         String         @id @default(cuid())
+  campaignId String
+  campaign   ReportCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  rowNumber  Int?
+  field      String?
+  code       String
+  message    String
+  severity   IssueSeverity
+  createdAt  DateTime       @default(now())
+
+  @@index([campaignId, severity])
+}
+
+model CampaignVerificationSession {
+  id               String         @id @default(cuid())
+  campaignId       String
+  campaign         ReportCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  memberId         String
+  member           CampaignMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  sessionTokenHash String         @unique
+  expiresAt        DateTime
+  createdAt        DateTime       @default(now())
+
+  @@index([campaignId])
+  @@index([memberId])
+  @@index([expiresAt])
+}
+
+model CampaignDownloadEvent {
+  id         String         @id @default(cuid())
+  campaignId String
+  campaign   ReportCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  memberId   String
+  member     CampaignMember @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  outcome    String
+  createdAt  DateTime       @default(now())
+
+  @@index([campaignId, createdAt])
+}
+
+model ExportFile {
+  id          String       @id @default(cuid())
+  batchId     String?
+  batch       ImportBatch? @relation(fields: [batchId], references: [id], onDelete: SetNull)
+  storageKey  String
+  status      String       @default("QUEUED")
+  errorSummary String?
+  createdById String
+  createdBy   AdminUser    @relation(fields: [createdById], references: [id])
+  expiresAt   DateTime
+  createdAt   DateTime     @default(now())
+
+  @@index([expiresAt])
+  @@index([batchId])
+}
