@@ -102,8 +102,10 @@ export async function getCampaignDetail(id: string) {
 
 export async function storeCampaignSource(campaignId: string, filePath: string, actorId: string): Promise<void> {
   const campaign = await requireCampaign(campaignId);
-  if (!editableStatuses.has(campaign.status)) {
-    throw new AppError("The source PDF can only be replaced before the campaign is activated.", 409, "invalid_state");
+  // The PDF may also be replaced while the campaign is live, so a corrected or final report
+  // can go out without changing the shared link. The swap is recorded in the audit log.
+  if (!editableStatuses.has(campaign.status) && campaign.status !== "ACTIVE") {
+    throw new AppError("The source PDF can only be replaced before activation or while the campaign is active.", 409, "invalid_state");
   }
   const env = getEnv();
   const info = await stat(filePath);

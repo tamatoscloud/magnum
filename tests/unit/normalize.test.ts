@@ -11,6 +11,9 @@ describe("normalization", () => {
     expect(nameMatchKey("Mr. Muhammad Ilyas")).toBe("muhammadilyas");
     expect(nameMatchKey("MISS.AMINA KHAN")).toBe("aminakhan");
     expect(nameMatchKey("Lt. Col. Abbas Khan")).toBe("abbaskhan");
+    expect(nameMatchKey("(MRS) Zarina Akbar")).toBe("zarinaakbar");
+    expect(nameMatchKey("Vice Admiral Rtd. Muzafar")).toBe("muzafar");
+    expect(nameMatchKey("Fl. Lt. Anvar Basharat")).toBe("anvarbasharat");
     expect(nameMatchKey("M/S. Roberts Cotton Associates Ltd.")).toBe("robertscottonassociatesltd");
     expect(nameMatchKey("N.B.P. Trustee Deptt.")).toBe(nameMatchKey("NBP trustee deptt"));
     expect(namesMatch("mrs mithi bai qasim", normalizeName("MITHI BAI QASIM"))).toBe(true);

@@ -97,6 +97,26 @@ export function CampaignManager({
         </section>
       ) : null}
 
+      {status === "ACTIVE" ? (
+        <section>
+          <form
+            className="space-y-3 lux-card rounded-3xl border border-line bg-card p-5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const data = new FormData(event.currentTarget);
+              void send(`/api/admin/campaigns/${campaignId}/source`, data);
+            }}
+          >
+            <h2 className="font-serif text-2xl">Replace report PDF</h2>
+            <p className="text-sm text-ink-soft">
+              Swap in a corrected or final annual report. The shared link stays the same, and every download after this uses the new file.
+            </p>
+            <input name="source" type="file" accept="application/pdf,.pdf" required className="text-sm" />
+            <Button type="submit" disabled={busy}>Replace PDF</Button>
+          </form>
+        </section>
+      ) : null}
+
       {editable && csvHeaders.length > 0 ? (
         <form
           className="space-y-4 lux-card rounded-3xl border border-line bg-card p-5"

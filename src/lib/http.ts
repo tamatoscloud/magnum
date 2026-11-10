@@ -23,8 +23,20 @@ export async function requirePermission(permission: Permission) {
 export function assertSameOrigin(request: Request): void {
   const origin = request.headers.get("origin");
   if (!origin) return;
-  const expected = new URL(getEnv().APP_BASE_URL).origin;
-  if (origin !== expected) throw new AppError("Invalid origin.", 403, "invalid_origin");
+  const env = getEnv();
+  const expected = new URL(env.APP_BASE_URL).origin;
+  if (origin === expected) return;
+  // Development only: also accept the app opened directly on this machine (http://localhost:<port>),
+  // so it can be used locally while APP_BASE_URL points at a public tunnel address.
+  if (env.NODE_ENV !== "production") {
+    try {
+      const { hostname } = new URL(origin);
+      if (hostname === "localhost" || hostname === "127.0.0.1") return;
+    } catch {
+      // not a valid URL: fall through to the rejection below
+    }
+  }
+  throw new AppError("Invalid origin.", 403, "invalid_origin");
 }
 
 export async function readJson(request: Request): Promise<unknown> {

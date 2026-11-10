@@ -23,7 +23,7 @@ export function normalizeFolio(input: string): string {
 export const NAME_TITLES = [
   "mr", "mrs", "miss", "ms", "msc", "mst", "mstt", "dr", "m/s", "messrs",
   "prof", "professor", "lt", "major", "maj", "col", "capt", "captain", "commander", "cdr",
-  "engr", "haji", "hajee", "hafiz",
+  "engr", "haji", "hajee", "hafiz", "fl", "flt", "vice", "admiral", "rtd", "retd",
 ] as const;
 
 const TITLE_SET = new Set<string>(NAME_TITLES);
@@ -34,7 +34,12 @@ const TITLE_SET = new Set<string>(NAME_TITLES);
  * "MUHAMMAD-ILYAS" all give "muhammadilyas"; "N.B.P." and "NBP" both give "nbp".
  */
 export function nameMatchKey(input: string): string {
-  const words = input.normalize("NFKC").toLocaleLowerCase("en-US").split(/[\s.,]+/).filter(Boolean);
+  const words = input
+    .normalize("NFKC")
+    .toLocaleLowerCase("en-US")
+    .split(/[\s.,()]+/)
+    .map((word) => (word === "m/s" ? word : word.replace(/[^\p{L}\p{N}]/gu, "")))
+    .filter(Boolean);
   while (words.length > 1 && TITLE_SET.has(words[0])) words.shift();
   return words.join("").replace(/[^\p{L}\p{N}]/gu, "");
 }
