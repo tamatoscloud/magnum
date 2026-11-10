@@ -3,7 +3,7 @@ import { getEnv } from "@/lib/env";
 import { AppError } from "@/lib/errors";
 import { writeAudit } from "@/lib/audit/log";
 import { clearCounter, consumeLimit, incrementCounter, readCounter } from "@/lib/rate-limit/limiter";
-import { normalizeFolio, normalizeName } from "@/lib/security/normalize";
+import { nameMatchKey, normalizeFolio, normalizeName } from "@/lib/security/normalize";
 import { generateToken, hashToken, isPast, timingSafeStringEqual } from "@/lib/security/tokens";
 
 export const PORTAL_COOKIE = "magnum_portal";
@@ -59,7 +59,8 @@ export async function verifyCustomerIdentity(input: {
     return { ok: false, message: LINK_UNAVAILABLE, status: 401 };
   }
 
-  const nameOk = timingSafeStringEqual(normalizeName(input.customerName), link.customer.normalizedCustomerName);
+  // Compare with titles and punctuation ignored (see nameMatchKey).
+  const nameOk = timingSafeStringEqual(nameMatchKey(input.customerName), nameMatchKey(link.customer.normalizedCustomerName));
   const folioOk = timingSafeStringEqual(normalizeFolio(input.folioNumber), link.customer.normalizedFolioNumber);
   if (!nameOk || !folioOk) {
     const count = await incrementCounter(`verify-fail:${link.id}`, env.VERIFICATION_LOCKOUT_MINUTES * 60);

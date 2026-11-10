@@ -9,7 +9,7 @@ import { encryptPdfFile, pdfPasswordFromFolio } from "@/lib/pdf/qpdf";
 import { acquirePdfSlot } from "@/lib/pdf/slots";
 import { discardWorkingDirectory } from "@/lib/pdf/temp-dirs";
 import { clearCounter, consumeLimit, incrementCounter, readCounter } from "@/lib/rate-limit/limiter";
-import { normalizeFolio, normalizeName } from "@/lib/security/normalize";
+import { nameMatchKey, normalizeFolio, normalizeName } from "@/lib/security/normalize";
 import { generateToken, hashToken, isPast, timingSafeStringEqual } from "@/lib/security/tokens";
 import { downloadCampaignSource } from "@/server/services/campaign-service";
 import {
@@ -83,7 +83,8 @@ export async function verifyCampaignIdentity(input: {
   const member = await prisma.campaignMember.findUnique({
     where: { campaignId_normalizedFolioNumber: { campaignId: campaign.id, normalizedFolioNumber: folio } },
   });
-  const nameOk = timingSafeStringEqual(name, member?.normalizedCustomerName ?? "unknown customer");
+  // Compare with titles and punctuation ignored (see nameMatchKey).
+  const nameOk = timingSafeStringEqual(nameMatchKey(name), nameMatchKey(member?.normalizedCustomerName ?? "unknown customer"));
   if (!member || !nameOk) {
     const count = await incrementCounter(failKey, env.VERIFICATION_LOCKOUT_MINUTES * 60);
     await writeAudit({

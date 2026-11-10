@@ -9,7 +9,7 @@ export type CanonicalField = (typeof CANONICAL_FIELDS)[number];
 export type ColumnMapping = Record<CanonicalField, string>;
 
 const ALIASES: Record<CanonicalField, string[]> = {
-  customer_name: ["customer_name", "customer name", "name", "full_name", "full name", "shareholder_name", "shareholder name"],
+  customer_name: ["customer_name", "customer name", "name", "full_name", "full name", "shareholder_name", "shareholder name", "security holder name", "security_holder_name"],
   folio_number: ["folio_number", "folio number", "folio no", "folio_no", "folio", "folio no."],
   email: ["email", "email address", "e-mail", "email_address"],
   phone_number: ["phone_number", "phone number", "phone", "mobile", "mobile number", "mobile_number", "whatsapp"],

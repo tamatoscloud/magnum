@@ -7,7 +7,7 @@ export type CampaignField = (typeof CAMPAIGN_FIELDS)[number];
 export type CampaignMapping = Partial<Record<CampaignField, string>> & Pick<Record<CampaignField, string>, "customer_name" | "folio_number">;
 
 const ALIASES: Record<CampaignField, string[]> = {
-  customer_name: ["customer_name", "customer name", "name", "full_name", "full name", "shareholder_name", "shareholder name"],
+  customer_name: ["customer_name", "customer name", "name", "full_name", "full name", "shareholder_name", "shareholder name", "security holder name", "security_holder_name"],
   folio_number: ["folio_number", "folio number", "folio no", "folio_no", "folio", "folio no."],
   email: ["email", "email address", "e-mail", "email_address"],
   phone_number: ["phone_number", "phone number", "phone", "mobile", "mobile number", "mobile_number", "whatsapp"],
