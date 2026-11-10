@@ -13,7 +13,7 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-brass">Files</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Files</p>
         <h1 className="font-serif text-4xl">Documents</h1>
       </div>
       <form className="flex gap-2">
@@ -23,9 +23,9 @@ export default async function DocumentsPage({ searchParams }: { searchParams: Pr
             <option key={status} value={status}>{status}</option>
           ))}
         </select>
-        <button className="rounded-full bg-ink px-4 py-2 text-sm text-paper" type="submit">Filter</button>
+        <button className="inline-flex items-center justify-center rounded-full border border-ink bg-ink px-5 py-2.5 text-sm font-semibold tracking-wide text-paper shadow-sm transition-all duration-200 hover:border-gold hover:bg-ink-deep hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2" type="submit">Filter</button>
       </form>
-      <div className="overflow-x-auto rounded-3xl border border-line bg-card">
+      <div className="overflow-x-auto lux-card rounded-3xl border border-line bg-card">
         <table className="w-full min-w-[760px] text-left text-sm">
           <thead className="bg-paper text-ink-soft">
             <tr>

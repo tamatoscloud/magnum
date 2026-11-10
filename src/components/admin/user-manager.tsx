@@ -11,7 +11,7 @@ export function UserManager() {
 
   return (
     <form
-      className="grid gap-3 rounded-3xl border border-line bg-card p-5 md:grid-cols-4"
+      className="grid gap-3 lux-card rounded-3xl border border-line bg-card p-5 md:grid-cols-4"
       onSubmit={async (event) => {
         event.preventDefault();
         const form = new FormData(event.currentTarget);

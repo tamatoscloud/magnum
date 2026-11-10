@@ -53,3 +53,9 @@ cf-tunnel-output.txt
 tunnel-log.txt
 wget-log*
 *.deb
+
+# public tunnel run files
+.env.local-backup
+
+# local tools (cloudflared.exe)
+/tools/

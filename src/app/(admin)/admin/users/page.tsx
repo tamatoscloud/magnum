@@ -7,11 +7,11 @@ export default async function UsersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-brass">Access</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Access</p>
         <h1 className="font-serif text-4xl">Administrators</h1>
       </div>
       <UserManager />
-      <div className="overflow-hidden rounded-3xl border border-line bg-card">
+      <div className="overflow-hidden lux-card rounded-3xl border border-line bg-card">
         <table className="w-full text-left text-sm">
           <thead className="bg-paper text-ink-soft">
             <tr>

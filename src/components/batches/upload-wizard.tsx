@@ -77,7 +77,7 @@ export function UploadWizard({
   }
 
   return (
-    <div className="rounded-3xl border border-line bg-card p-6">
+    <div className="lux-card rounded-3xl border border-line bg-card p-6">
       {!batchId ? (
         <form
           className="space-y-4"

@@ -23,7 +23,7 @@ export function QueuePanel() {
   }, []);
 
   return (
-    <section className="rounded-3xl border border-line bg-card p-5">
+    <section className="lux-card rounded-3xl border border-line bg-card p-5">
       <h2 className="font-serif text-2xl">Queues</h2>
       {error ? <p className="mt-2 text-sm text-danger">{error}</p> : null}
       <div className="mt-4 space-y-4">

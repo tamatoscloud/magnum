@@ -66,7 +66,7 @@ export function CampaignManager({
       {editable ? (
         <section className="grid gap-4 md:grid-cols-2">
           <form
-            className="space-y-3 rounded-3xl border border-line bg-card p-5"
+            className="space-y-3 lux-card rounded-3xl border border-line bg-card p-5"
             onSubmit={(event) => {
               event.preventDefault();
               const data = new FormData(event.currentTarget);
@@ -79,7 +79,7 @@ export function CampaignManager({
             <Button type="submit" disabled={busy}>Upload PDF</Button>
           </form>
           <form
-            className="space-y-3 rounded-3xl border border-line bg-card p-5"
+            className="space-y-3 lux-card rounded-3xl border border-line bg-card p-5"
             onSubmit={(event) => {
               event.preventDefault();
               const data = new FormData(event.currentTarget);
@@ -99,7 +99,7 @@ export function CampaignManager({
 
       {editable && csvHeaders.length > 0 ? (
         <form
-          className="space-y-4 rounded-3xl border border-line bg-card p-5"
+          className="space-y-4 lux-card rounded-3xl border border-line bg-card p-5"
           onSubmit={(event) => {
             event.preventDefault();
             void send(`/api/admin/campaigns/${campaignId}/validate`, JSON.stringify({ mapping }), "POST").then(() => undefined);
@@ -154,7 +154,7 @@ export function CampaignManager({
       </div>
 
       {sharedUrl ? (
-        <section className="rounded-3xl border border-line bg-card p-5">
+        <section className="lux-card rounded-3xl border border-line bg-card p-5">
           <h2 className="font-serif text-2xl">Shared campaign URL</h2>
           <p className="mt-2 text-sm text-ink-soft">Every customer in this campaign uses this same address. It is not shown in the campaign list.</p>
           <p className="mt-3 break-all font-medium">{sharedUrl}</p>

@@ -15,7 +15,7 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
     <div className="space-y-6">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-sm text-brass">{batch.originalCsvFilename}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">{batch.originalCsvFilename}</p>
           <h1 className="font-serif text-4xl">{batch.batchName}</h1>
         </div>
         <Badge value={batch.status} />
@@ -42,7 +42,7 @@ export default async function BatchDetailPage({ params }: { params: Promise<{ id
         canRetry={can(user.role, "batches:retry") && batch.failedRecords > 0}
         canExport={can(user.role, "reports:export") && batch.processedRecords > 0}
       />
-      <section className="overflow-hidden rounded-3xl border border-line bg-card">
+      <section className="overflow-hidden lux-card rounded-3xl border border-line bg-card">
         <h2 className="px-4 py-3 font-serif text-2xl">Validation</h2>
         <table className="w-full text-left text-sm">
           <thead className="bg-paper text-ink-soft">

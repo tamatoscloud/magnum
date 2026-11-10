@@ -35,7 +35,7 @@ export function VerifyForm({ token, endpoint = "/api/public/verify" }: { token: 
   }
 
   return (
-    <form className="mt-8 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="space-y-2">
         <Label htmlFor="customerName">Full name</Label>
         <Input id="customerName" autoComplete="name" {...form.register("customerName")} />

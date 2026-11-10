@@ -28,7 +28,7 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   // Dev-only. Lets the public demo tunnel load the client bundle so the verify form runs.
-  allowedDevOrigins: ["127.0.0.1", "*.lhr.life", "*.loca.lt", "*.trycloudflare.com"],
+  allowedDevOrigins: ["127.0.0.1", "*.lhr.life", "*.loca.lt", "*.trycloudflare.com", "*.ts.net", "**.ts.net", "desktop-bilukmu.taildb8c63.ts.net"],
   poweredByHeader: false,
   serverExternalPackages: ["bullmq", "ioredis", "yauzl", "bcryptjs", "pdf-lib", "@prisma/client"],
   turbopack: {

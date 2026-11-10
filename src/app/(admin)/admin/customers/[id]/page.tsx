@@ -14,10 +14,10 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-brass">{customer.batch.batchName}</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">{customer.batch.batchName}</p>
         <h1 className="font-serif text-4xl">{customer.customerName}</h1>
       </div>
-      <section className="grid gap-4 rounded-3xl border border-line bg-card p-5 md:grid-cols-2">
+      <section className="grid gap-4 lux-card rounded-3xl border border-line bg-card p-5 md:grid-cols-2">
         <p>Folio: {reveal ? customer.folioNumber : "Hidden"}</p>
         <p>Email: {reveal ? customer.email ?? "—" : customer.email ? "On file" : "—"}</p>
         <p>Phone: {reveal ? customer.phoneNumber ?? "—" : customer.phoneNumber ? "On file" : "—"}</p>
@@ -32,7 +32,7 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
         canManage={can(user.role, "links:manage")}
         canResend={can(user.role, "notifications:resend")}
       />
-      <section className="rounded-3xl border border-line bg-card p-5">
+      <section className="lux-card rounded-3xl border border-line bg-card p-5">
         <h2 className="font-serif text-2xl">Links</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {customer.accessLinks.map((link) => (
@@ -44,7 +44,7 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
           ))}
         </ul>
       </section>
-      <section className="rounded-3xl border border-line bg-card p-5">
+      <section className="lux-card rounded-3xl border border-line bg-card p-5">
         <h2 className="font-serif text-2xl">Deliveries</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {customer.deliveries.map((delivery) => (

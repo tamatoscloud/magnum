@@ -6,7 +6,7 @@ export default async function NewCampaignPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-brass">Annual reports</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Annual reports</p>
         <h1 className="font-serif text-4xl">New campaign</h1>
         <p className="mt-2 max-w-2xl text-sm text-ink-soft">
           One source PDF is shared by every customer in the roster. Each customer opens the same URL and receives a copy encrypted with their folio number.

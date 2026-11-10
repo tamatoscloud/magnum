@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PublicFrame } from "@/components/brand/public-frame";
 
 const schema = z.object({
   password: z.string().min(12).regex(/[a-z]/).regex(/[A-Z]/).regex(/[0-9]/),
@@ -36,7 +37,7 @@ function ResetForm() {
   }
 
   return (
-    <form className="mt-6 space-y-4 rounded-3xl border border-line bg-card p-6" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="lux-card mt-8 space-y-4 rounded-3xl border border-line bg-card p-6 sm:p-8" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="space-y-2">
         <Label htmlFor="password">New password</Label>
         <Input id="password" type="password" autoComplete="new-password" {...form.register("password")} />
@@ -50,11 +51,12 @@ function ResetForm() {
 
 export default function ResetPasswordPage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-6">
-      <h1 className="font-serif text-4xl">Choose a new password</h1>
+    <PublicFrame eyebrow="Staff access">
+      <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Choose a new password</h1>
+      <div className="gold-rule mt-6 max-w-[8rem]" />
       <Suspense>
         <ResetForm />
       </Suspense>
-    </main>
+    </PublicFrame>
   );
 }

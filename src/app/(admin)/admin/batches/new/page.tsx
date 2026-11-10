@@ -6,7 +6,7 @@ export default async function NewBatchPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="text-sm text-brass">Import</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Import</p>
         <h1 className="font-serif text-4xl">Upload a batch</h1>
       </div>
       <UploadWizard

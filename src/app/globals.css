@@ -1,33 +1,105 @@
 @import "tailwindcss";
 
+/*
+ * The Magnum Ice Cream Company brand theme.
+ * Chocolate (ink) for text and dark surfaces, metallic gold for accents,
+ * ivory/vanilla for page backgrounds. Gold is never used for small text on
+ * light surfaces (contrast 1.9:1); use `text-brass` (deep bronze, 5:1) there.
+ */
 @theme inline {
-  --font-sans: var(--font-figtree), "Segoe UI", sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, serif;
-  --color-ink: #142033;
-  --color-ink-soft: #31445f;
-  --color-brass: #8d6a3a;
-  --color-brass-bright: #c6a56a;
-  --color-paper: #f4f0e7;
-  --color-card: #fffdf9;
-  --color-line: #e5dccb;
-  --color-danger: #8d2f2f;
-  --color-ok: #1d6a45;
+  --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
+  --font-serif: var(--font-playfair), "Didot", Georgia, serif;
+
+  /* Chocolate */
+  --color-ink: #2b1810;
+  --color-ink-deep: #1a0e0a;
+  --color-ink-soft: #6b5246;
+
+  /* Gold & bronze */
+  --color-gold: #d4af37;
+  --color-gold-soft: #c5a059;
+  --color-brass: #86652a;
+  --color-brass-bright: #d4af37;
+
+  /* Vanilla & ivory */
+  --color-paper: #faf6f0;
+  --color-cream: #f3ead9;
+  --color-card: #ffffff;
+  --color-line: #eadfc9;
+
+  /* Wall's heart red, used sparingly */
+  --color-heart: #e0002f;
+
+  --color-danger: #9b2a2a;
+  --color-ok: #2f6b3f;
   --color-warn: #8a5a12;
+
+  --shadow-sm: 0 1px 2px rgb(43 24 16 / 0.05), 0 8px 24px -12px rgb(43 24 16 / 0.18);
+  --shadow-md: 0 2px 4px rgb(43 24 16 / 0.06), 0 18px 40px -18px rgb(43 24 16 / 0.28);
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    background: var(--color-paper);
+    background:
+      radial-gradient(1200px 600px at 100% -10%, rgb(212 175 55 / 0.08), transparent 60%),
+      var(--color-paper);
+    background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.01em;
   }
 
   a {
     color: inherit;
     text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  /* Premium card: white surface, warm shadow, gold hairline on hover. */
+  .lux-card {
+    box-shadow: var(--shadow-sm);
+    transition:
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+  }
+
+  .lux-card:hover {
+    border-color: rgb(197 160 89 / 0.55);
+    box-shadow: var(--shadow-md);
+  }
+
+  /* Thin gold rule used under page eyebrows and in the sidebar. */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-soft), transparent);
+  }
+
+  .chocolate-surface {
+    background: linear-gradient(180deg, var(--color-ink) 0%, var(--color-ink-deep) 100%);
   }
 }
 
 ::selection {
-  background: #e7d3ae;
+  background: rgb(212 175 55 / 0.35);
+  color: var(--color-ink);
 }

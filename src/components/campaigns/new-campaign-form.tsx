@@ -13,7 +13,7 @@ export function NewCampaignForm({ defaultExpiry }: { defaultExpiry: number }) {
 
   return (
     <form
-      className="max-w-lg space-y-4 rounded-3xl border border-line bg-card p-6"
+      className="max-w-lg space-y-4 lux-card rounded-3xl border border-line bg-card p-6"
       onSubmit={(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

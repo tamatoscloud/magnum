@@ -10,14 +10,14 @@ export default async function BatchesPage({ searchParams }: { searchParams: Prom
     <div className="space-y-6">
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="text-sm text-brass">Imports</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Imports</p>
           <h1 className="font-serif text-4xl">Batches</h1>
         </div>
-        <Link href="/admin/batches/new" className="rounded-full bg-ink px-4 py-2 text-sm text-paper">
+        <Link href="/admin/batches/new" className="inline-flex items-center justify-center rounded-full border border-ink bg-ink px-5 py-2.5 text-sm font-semibold tracking-wide text-paper shadow-sm transition-all duration-200 hover:border-gold hover:bg-ink-deep hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2">
           Upload batch
         </Link>
       </div>
-      <div className="overflow-hidden rounded-3xl border border-line bg-card">
+      <div className="overflow-hidden lux-card rounded-3xl border border-line bg-card">
         <table className="w-full text-left text-sm">
           <thead className="bg-paper text-ink-soft">
             <tr>
