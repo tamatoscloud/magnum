@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-/** Corporate lock-up: "The Magnum Ice Cream Company" with the Wall's heart. 2880×974 source, ratio ≈ 2.957. */
+/** Corporate lock-up (TMICC Logo, Black and Red / White and Red RGB). 2880×974 source, ratio ≈ 2.957. */
 const LOGO = {
   dark: "/images/brand/magnum-logo.png",
   light: "/images/brand/magnum-logo-ivory.png",
