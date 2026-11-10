@@ -7,8 +7,15 @@
  * light surfaces (contrast 1.9:1); use `text-brass` (deep bronze, 5:1) there.
  */
 @theme inline {
-  --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
-  --font-serif: var(--font-playfair), "Didot", Georgia, serif;
+  /*
+   * Brand typefaces (TMICC corporate): Neue Haas Grotesk Display 55 Roman / 65 Medium
+   * for text and Juana SemiBold Italic for display headings, loaded from the licensed
+   * Monotype web kit in layout.tsx. Manrope / Playfair stay as fallbacks if the kit
+   * cannot load (for example on a domain not yet registered on the kit).
+   */
+  --font-sans: "NeueHaasGroteskDisplay55Roman", var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-sans-medium: "NeueHaasGroteskDisplay65Medium", "NeueHaasGroteskDisplay55Roman", var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "JuanaSemiBoldItalic", var(--font-playfair), "Didot", Georgia, serif;
 
   /* Chocolate */
   --color-ink: #2b1810;
@@ -50,6 +57,18 @@
     background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-sans);
+    /* Each brand weight is its own family; never fake bold or italic. */
+    font-synthesis: none;
+  }
+
+  /* Medium/semibold/bold text uses the Neue Haas Grotesk 65 Medium cut. */
+  .font-medium,
+  .font-semibold,
+  .font-bold,
+  strong,
+  b,
+  th {
+    font-family: var(--font-sans-medium);
   }
 
   h1,
