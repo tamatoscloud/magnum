@@ -27,9 +27,9 @@ export default function ForgotPasswordPage() {
 
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Reset password</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <form className="lux-card mt-8 space-y-4 rounded-3xl border border-line bg-card p-6 sm:p-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <h1 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">Reset password</h1>
+      <div className="gold-rule mt-4 max-w-[8rem]" />
+      <form className="lux-card mt-6 space-y-4 rounded-2xl border border-line bg-card p-5 sm:p-6" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="space-y-2">
           <Label htmlFor="email">Work email</Label>
           <Input id="email" type="email" {...form.register("email")} />

@@ -12,12 +12,12 @@ export default async function LoginPage() {
   if (user) redirect("/admin");
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Admin sign in</h1>
+      <h1 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">Admin sign in</h1>
       <p className="mt-3 text-sm leading-6 text-ink-soft">
         Dividend statement distribution for authorised staff of The Magnum Ice Cream Company.
       </p>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <div className="lux-card mt-8 rounded-3xl border border-line bg-card p-6 sm:p-8">
+      <div className="gold-rule mt-4 max-w-[8rem]" />
+      <div className="lux-card mt-6 rounded-2xl border border-line bg-card p-5 sm:p-6">
         <Suspense>
           <LoginForm />
         </Suspense>

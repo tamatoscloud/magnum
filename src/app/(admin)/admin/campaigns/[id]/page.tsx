@@ -26,7 +26,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Shared annual report</p>
-          <h1 className="font-serif text-4xl">{campaign.name}</h1>
+          <h1 className="font-serif text-3xl">{campaign.name}</h1>
         </div>
         <Badge value={campaign.status} />
       </div>
@@ -36,7 +36,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
         <Stat label="Invalid rows" value={campaign.invalidRecords} />
         <Stat label="Source PDF" value={campaign.sourceSha256 ? "Stored" : "Missing"} />
       </section>
-      <section className="lux-card rounded-3xl border border-line bg-card p-5">
+      <section className="lux-card rounded-2xl border border-line bg-card p-5">
         <h2 className="font-serif text-2xl">Downloads</h2>
         <ul className="mt-3 space-y-2 text-sm">
           {Object.keys(downloads).length === 0 ? <li className="text-ink-soft">No download attempts yet.</li> : null}
@@ -53,7 +53,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
         canActivate={can(user.role, "campaigns:activate")}
         canReveal={can(user.role, "campaigns:reveal")}
       />
-      <section className="lux-card rounded-3xl border border-line bg-card p-5">
+      <section className="lux-card rounded-2xl border border-line bg-card p-5">
         <h2 className="font-serif text-2xl">Validation</h2>
         {campaign.issues.length === 0 ? <p className="mt-3 text-sm text-ink-soft">No validation issues.</p> : null}
         <ul className="mt-3 space-y-2 text-sm">
@@ -71,7 +71,7 @@ export default async function CampaignDetailPage({ params }: { params: Promise<{
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <article className="lux-card rounded-3xl border border-line bg-card p-5">
+    <article className="lux-card rounded-2xl border border-line bg-card p-5">
       <p className="text-sm text-ink-soft">{label}</p>
       <p className="mt-2 font-serif text-3xl">{value}</p>
     </article>

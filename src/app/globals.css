@@ -39,9 +39,22 @@
 }
 
 @layer base {
+  /*
+   * One consistent scale across screens. Everything is sized in rem, so this
+   * shrinks the whole UI evenly on laptops/desktops (including Windows display
+   * scaling at 125–150%, which makes the viewport short) without touching phones.
+   */
   html {
     -webkit-text-size-adjust: 100%;
+    font-size: 16px;
   }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
+  }
+
 
   body {
     background:

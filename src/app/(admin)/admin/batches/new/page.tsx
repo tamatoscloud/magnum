@@ -7,7 +7,7 @@ export default async function NewBatchPage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Import</p>
-        <h1 className="font-serif text-4xl">Upload a batch</h1>
+        <h1 className="font-serif text-3xl">Upload a batch</h1>
       </div>
       <UploadWizard
         defaultExpiry={settings.defaultLinkExpiryDays}

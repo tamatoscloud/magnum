@@ -22,14 +22,14 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
 
   return (
     <PublicFrame eyebrow="Shareholder services">
-      <h1 className="mt-3 font-serif text-4xl leading-tight text-ink sm:text-5xl">Access Your Annual Report</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <div className="lux-card mt-8 rounded-3xl border border-line bg-card p-6 sm:p-8">
+      <h1 className="mt-2 font-serif text-3xl leading-tight text-ink sm:text-4xl">Access Your Annual Report</h1>
+      <div className="gold-rule mt-4 max-w-[8rem]" />
+      <div className="lux-card mt-6 rounded-2xl border border-line bg-card p-5 sm:p-6">
         {unavailable ? (
           <p className="text-sm text-ink-soft">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
         ) : verified ? (
           <div className="space-y-4">
-            <p className="text-sm text-ink-soft">Identity verified. Download your encrypted annual report. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
+            <p className="text-sm text-ink-soft">Identity verified. Download your encrypted annual report. It will ask for your folio number in uppercase, without spaces.</p>
             <a className={buttonVariants()} href="/api/public/campaign/download">
               Download annual report
             </a>
@@ -38,8 +38,8 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
           <VerifyForm token={token} endpoint="/api/public/campaign/verify" />
         )}
       </div>
-      <p className="mt-6 text-xs leading-5 text-ink-soft">
-        The Magnum Ice Cream Company uses your name and folio number to confirm this report belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
+      <p className="mt-5 text-xs leading-5 text-ink-soft">
+        The Magnum Ice Cream Company uses your name and folio number to confirm this report belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number.
       </p>
     </PublicFrame>
   );

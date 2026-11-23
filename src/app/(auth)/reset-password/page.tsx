@@ -37,7 +37,7 @@ function ResetForm() {
   }
 
   return (
-    <form className="lux-card mt-8 space-y-4 rounded-3xl border border-line bg-card p-6 sm:p-8" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="lux-card mt-6 space-y-4 rounded-2xl border border-line bg-card p-5 sm:p-6" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="space-y-2">
         <Label htmlFor="password">New password</Label>
         <Input id="password" type="password" autoComplete="new-password" {...form.register("password")} />
@@ -52,8 +52,8 @@ function ResetForm() {
 export default function ResetPasswordPage() {
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Choose a new password</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
+      <h1 className="mt-2 font-serif text-3xl text-ink sm:text-4xl">Choose a new password</h1>
+      <div className="gold-rule mt-4 max-w-[8rem]" />
       <Suspense>
         <ResetForm />
       </Suspense>

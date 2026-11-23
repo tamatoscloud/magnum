@@ -35,13 +35,13 @@ export function VerifyForm({ token, endpoint = "/api/public/verify" }: { token: 
   }
 
   return (
-    <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
-      <div className="space-y-2">
+    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <div className="space-y-1.5">
         <Label htmlFor="customerName">Full name</Label>
         <Input id="customerName" autoComplete="name" {...form.register("customerName")} />
         {form.formState.errors.customerName ? <p className="text-sm text-danger">{form.formState.errors.customerName.message}</p> : null}
       </div>
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         <Label htmlFor="folioNumber">Folio number</Label>
         <Input id="folioNumber" autoComplete="off" {...form.register("folioNumber")} />
         {form.formState.errors.folioNumber ? <p className="text-sm text-danger">{form.formState.errors.folioNumber.message}</p> : null}
