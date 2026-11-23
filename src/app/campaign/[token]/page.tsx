@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { VerifyForm } from "@/components/public-portal/verify-form";
+import { SessionCountdown } from "@/components/public-portal/session-countdown";
 import { PublicFrame } from "@/components/brand/public-frame";
 import { buttonVariants } from "@/components/ui/button";
 import { prisma } from "@/lib/db/prisma";
@@ -15,9 +16,11 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
   const jar = await cookies();
   const sessionToken = jar.get(CAMPAIGN_COOKIE)?.value;
   let verified = false;
+  let sessionExpiresAt: Date | null = null;
   if (!unavailable && campaign && sessionToken) {
     const session = await prisma.campaignVerificationSession.findUnique({ where: { sessionTokenHash: hashToken(sessionToken) } });
     verified = Boolean(session && session.campaignId === campaign.id && !isPast(session.expiresAt));
+    if (verified && session) sessionExpiresAt = session.expiresAt;
   }
 
   return (
@@ -33,6 +36,7 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
             <a className={buttonVariants()} href="/api/public/campaign/download">
               Download annual report
             </a>
+            {sessionExpiresAt ? <SessionCountdown expiresAt={sessionExpiresAt.toISOString()} /> : null}
           </div>
         ) : (
           <VerifyForm token={token} endpoint="/api/public/campaign/verify" />

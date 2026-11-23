@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db/prisma";
 import { hashToken, isPast } from "@/lib/security/tokens";
 import { PORTAL_COOKIE } from "@/server/services/verification-service";
 import { VerifyForm } from "@/components/public-portal/verify-form";
+import { SessionCountdown } from "@/components/public-portal/session-countdown";
 import { PublicFrame } from "@/components/brand/public-frame";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -15,9 +16,11 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
   const jar = await cookies();
   const sessionToken = jar.get(PORTAL_COOKIE)?.value;
   let verified = false;
+  let sessionExpiresAt: Date | null = null;
   if (!unavailable && link && sessionToken) {
     const session = await prisma.verificationSession.findUnique({ where: { sessionTokenHash: hashToken(sessionToken) } });
     verified = Boolean(session && session.accessLinkId === link.id && !isPast(session.expiresAt));
+    if (verified && session) sessionExpiresAt = session.expiresAt;
   }
 
   return (
@@ -33,6 +36,7 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
             <a className={buttonVariants()} href="/api/public/download">
               Download statement
             </a>
+            {sessionExpiresAt ? <SessionCountdown expiresAt={sessionExpiresAt.toISOString()} /> : null}
           </div>
         ) : (
           <VerifyForm token={token} />

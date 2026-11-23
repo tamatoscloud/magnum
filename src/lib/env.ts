@@ -47,7 +47,7 @@ const envSchema = z
     PDF_GENERATION_TIMEOUT_MS: z.coerce.number().int().positive().max(600_000).default(120_000),
     CAMPAIGN_TEMP_MAX_AGE_MINUTES: z.coerce.number().int().positive().max(1440).default(30),
     DEFAULT_LINK_EXPIRY_DAYS: z.coerce.number().int().positive().max(3650).default(30),
-    VERIFICATION_SESSION_TTL_MINUTES: z.coerce.number().int().positive().max(1440).default(15),
+    VERIFICATION_SESSION_TTL_MINUTES: z.coerce.number().int().positive().max(1440).default(5),
     MAX_VERIFICATION_ATTEMPTS: z.coerce.number().int().positive().max(20).default(5),
     VERIFICATION_LOCKOUT_MINUTES: z.coerce.number().int().positive().max(1440).default(15),
     MOCK_EMAIL_ENABLED: booleanString,

@@ -107,7 +107,7 @@ Webhook verification is `GET /api/webhooks/whatsapp` with `WHATSAPP_VERIFY_TOKEN
 
 ## Identity and PDF passwords
 
-Name and folio verification is not multi-factor authentication. The portal says so. The check is server-side, rate limited, and locked out after `MAX_VERIFICATION_ATTEMPTS`. A successful check creates an HttpOnly session cookie (`magnum_portal`) that expires after `VERIFICATION_SESSION_TTL_MINUTES`. Download checks the link again and streams only that customer's encrypted PDF.
+Name and folio verification is not multi-factor authentication. The portal says so. The check is server-side, rate limited, and locked out after `MAX_VERIFICATION_ATTEMPTS`. A successful check creates an HttpOnly session cookie (`magnum_portal`) that expires after `VERIFICATION_SESSION_TTL_MINUTES` (default 5). The expiry is fixed from the moment of verification and is not extended by downloads; the verified page shows a countdown and returns to the verify form when it ends, so a new download needs a fresh name and folio check. This applies to both individual links and shared campaign links. Download checks the link again and streams only that customer's encrypted PDF.
 
 `PDF_PASSWORD_POLICY=folio` is the only supported policy. The open password is the normalized folio: trimmed, whitespace removed, uppercased, leading zeros preserved. A short or guessable folio is a weak PDF password. The owner password is a random 32-byte secret used only during encryption and is not stored. qpdf is invoked with an argument array and `shell: false`. Passwords are redacted from qpdf stderr before it is saved.
 
