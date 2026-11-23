@@ -30,7 +30,7 @@ export function dividendMessage(input: {
     input.accessUrl,
     "",
     `This link expires on ${expiry}.`,
-    "The PDF password is your folio number in uppercase, with spaces removed. Leading zeros are part of the password.",
+    "The PDF password is your folio number in uppercase, with spaces removed.",
     "",
     "The Magnum Ice Cream Company will not ask you to forward this link. If you were not expecting this message, contact shareholder services.",
   ].join("\n");
@@ -50,7 +50,7 @@ export function dividendMessage(input: {
         <p>Open your secure link and verify your full name and folio number to download the statement. The PDF is not attached to this email.</p>
         <p style="margin:26px 0;"><a href="${escapeHtml(input.accessUrl)}" style="display:inline-block;background:#2b1810;color:#faf6f0;border:1px solid #d4af37;border-radius:999px;padding:12px 22px;text-decoration:none;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:.04em;">Access your statement</a></p>
         <p style="font-size:14px;color:#6b5246;">This link expires on ${escapeHtml(expiry)}.</p>
-        <p style="font-size:14px;color:#6b5246;">The PDF password is your folio number in uppercase, with spaces removed. Leading zeros are part of the password.</p>
+        <p style="font-size:14px;color:#6b5246;">The PDF password is your folio number in uppercase, with spaces removed.</p>
       </div>
       <p style="font-size:12px;color:#6b5246;padding:16px 4px;font-family:Arial,Helvetica,sans-serif;">The Magnum Ice Cream Company will not ask you to forward this link. If you were not expecting this message, contact shareholder services.</p>
     </div>
