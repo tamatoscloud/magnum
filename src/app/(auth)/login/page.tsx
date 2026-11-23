@@ -12,13 +12,13 @@ export default async function LoginPage() {
   if (user) redirect("/admin");
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="tm-heading mt-3">
+      <h1 className="tm-heading mt-2">
         <span className="tm-accent">Admin</span> sign in
       </h1>
-      <p className="tm-lead mt-4">
+      <p className="tm-lead mt-3">
         Dividend statement distribution for authorised staff of The Magnum Ice Cream Company.
       </p>
-      <div className="tm-box mt-8">
+      <div className="tm-box mt-5">
         <Suspense>
           <LoginForm />
         </Suspense>

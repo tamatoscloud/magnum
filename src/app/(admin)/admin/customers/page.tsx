@@ -30,9 +30,9 @@ export default async function CustomersPage({
     <div className="space-y-6">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Records</p>
-        <h1 className="font-serif text-4xl">Customers</h1>
+        <h1 className="font-serif text-3xl">Customers</h1>
       </div>
-      <form className="grid gap-3 lux-card rounded-3xl border border-line bg-card p-4 md:grid-cols-4">
+      <form className="grid gap-3 lux-card rounded-2xl border border-line bg-card p-4 md:grid-cols-4">
         <input name="q" defaultValue={params.q} placeholder="Name, folio, email, phone" className="rounded-xl border border-line px-3 py-2 text-sm" />
         <select name="batchId" defaultValue={params.batchId ?? ""} className="rounded-xl border border-line px-3 py-2 text-sm">
           <option value="">All batches</option>
@@ -48,7 +48,7 @@ export default async function CustomersPage({
         </select>
         <button className="inline-flex items-center justify-center rounded-full border border-ink bg-ink px-5 py-2.5 text-sm font-semibold tracking-wide text-paper shadow-sm transition-all duration-200 hover:border-gold hover:bg-ink-deep hover:text-gold focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2" type="submit">Search</button>
       </form>
-      <div className="overflow-x-auto lux-card rounded-3xl border border-line bg-card">
+      <div className="overflow-x-auto lux-card rounded-2xl border border-line bg-card">
         <table className="w-full min-w-[720px] text-left text-sm">
           <thead className="bg-paper text-ink-soft">
             <tr>

@@ -60,8 +60,20 @@
 }
 
 @layer base {
+  /*
+   * One consistent scale across screens. Everything is sized in rem, so this
+   * shrinks the whole UI evenly on laptops and desktops (including Windows display
+   * scaling at 125-150%) while phones keep 16px text.
+   */
   html {
     -webkit-text-size-adjust: 100%;
+    font-size: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
   }
 
   body {
@@ -137,7 +149,7 @@
   .tm-heading {
     font-family: var(--font-sans-medium);
     font-weight: 500;
-    font-size: clamp(2.5rem, 2rem + 2.2vw, 3.85rem);
+    font-size: clamp(1.75rem, 1.25rem + 1vw, 2.25rem);
     line-height: 1.12;
     letter-spacing: -0.01em;
     color: var(--color-tm-ink);
@@ -151,42 +163,42 @@
   }
 
   .tm-lead {
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.5;
     color: var(--color-tm-ink);
   }
 
   @media (min-width: 640px) {
     .tm-lead {
-      font-size: 1.28rem;
+      font-size: 1.075rem;
     }
   }
 
   /* Rounded boxes: beige for the form, powder blue for information. */
   .tm-box {
-    border-radius: 32px;
+    border-radius: 24px;
     background: var(--color-tm-beige);
-    padding: 1.75rem 1.5rem;
+    padding: 1.25rem;
   }
 
   .tm-box-blue {
-    border-radius: 32px;
+    border-radius: 20px;
     background: var(--color-tm-blue);
-    padding: 1.5rem;
+    padding: 1rem 1.25rem;
   }
 
   @media (min-width: 640px) {
     .tm-box {
-      padding: 2rem 2.25rem;
+      padding: 1.5rem 1.75rem;
     }
     .tm-box-blue {
-      padding: 1.5rem 2.25rem;
+      padding: 1rem 1.75rem;
     }
   }
 
   .tm-label {
     display: block;
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.5;
     font-weight: 400;
     color: var(--color-tm-ink);
@@ -199,13 +211,14 @@
 
   .tm-input {
     width: 100%;
-    height: 55px;
-    border-radius: 16px;
+    height: 46px;
+    border-radius: 12px;
     border: 0.8px solid var(--color-tm-ink);
     background: #ffffff;
-    padding: 0.8rem 1.35rem;
-    font-size: 1.09rem;
-    line-height: 1.6;
+    padding: 0.55rem 1rem;
+    /* 16px on phones so iOS Safari does not zoom in when the field is tapped. */
+    font-size: 1rem;
+    line-height: 1.5;
     color: #000000;
     outline: none;
     transition:
@@ -227,14 +240,14 @@
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
-    min-height: 48px;
-    border-radius: 26px;
+    min-height: 42px;
+    border-radius: 22px;
     background: var(--color-tm-green);
     color: var(--color-tm-ink);
-    padding: 0.8rem 1.6rem;
+    padding: 0.65rem 1.35rem;
     font-family: var(--font-sans-medium);
     font-weight: 500;
-    font-size: 1.14rem;
+    font-size: 1rem;
     line-height: 1;
     transition:
       background-color 150ms ease,
@@ -257,7 +270,7 @@
   }
 
   .tm-error {
-    font-size: 1rem;
+    font-size: 0.9rem;
     line-height: 1.5;
     font-family: var(--font-sans-medium);
     font-weight: 500;
@@ -265,7 +278,7 @@
   }
 
   .tm-small {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.5;
     color: var(--color-tm-ink);
   }
@@ -273,7 +286,7 @@
   .tm-eyebrow {
     font-family: var(--font-sans-medium);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: var(--color-tm-brown);
   }
 

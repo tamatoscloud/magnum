@@ -15,11 +15,11 @@ export default async function DashboardPage() {
     <div className="space-y-8">
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass">Distribution</p>
-        <h1 className="font-serif text-4xl">Dashboard</h1>
+        <h1 className="font-serif text-3xl">Dashboard</h1>
       </div>
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map(([label, value]) => (
-          <article key={String(label)} className="lux-card rounded-3xl border border-line bg-card p-5">
+          <article key={String(label)} className="lux-card rounded-2xl border border-line bg-card p-5">
             <p className="text-sm text-ink-soft">{label}</p>
             <p className="mt-2 font-serif text-3xl">{value}</p>
           </article>
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
         <DeliveryCard title="Email" counts={stats.email} />
         <DeliveryCard title="WhatsApp" counts={stats.whatsapp} />
       </section>
-      <section className="lux-card rounded-3xl border border-line bg-card p-5">
+      <section className="lux-card rounded-2xl border border-line bg-card p-5">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-serif text-2xl">Recent batches</h2>
           <Link href="/admin/batches/new" className="text-sm font-semibold text-brass underline-offset-4 hover:text-ink hover:underline">
@@ -56,7 +56,7 @@ export default async function DashboardPage() {
 function DeliveryCard({ title, counts }: { title: string; counts: Record<string, number> }) {
   const entries = Object.entries(counts);
   return (
-    <article className="lux-card rounded-3xl border border-line bg-card p-5">
+    <article className="lux-card rounded-2xl border border-line bg-card p-5">
       <h2 className="font-serif text-2xl">{title}</h2>
       {entries.length === 0 ? <p className="mt-3 text-sm text-ink-soft">No delivery attempts yet.</p> : null}
       <ul className="mt-3 space-y-2 text-sm">

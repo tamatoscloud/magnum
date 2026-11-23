@@ -24,10 +24,10 @@ export default function ForgotPasswordPage() {
 
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="tm-heading mt-3">
+      <h1 className="tm-heading mt-2">
         <span className="tm-accent">Reset</span> password
       </h1>
-      <form className="tm-box mt-8 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="tm-box mt-5 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="space-y-2">
           <label className="tm-label" htmlFor="email">Work email</label>
           <input className="tm-input" id="email" type="email" {...form.register("email")} />

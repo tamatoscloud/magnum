@@ -25,18 +25,18 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
 
   return (
     <PublicFrame eyebrow="Shareholder services">
-      <h1 className="tm-heading mt-3">
+      <h1 className="tm-heading mt-2">
         <span className="tm-accent">Access</span> your dividend statement
       </h1>
       {!unavailable && !verified ? (
-        <p className="tm-lead mt-4">Please enter your full name and folio number below to open your dividend statement securely.</p>
+        <p className="tm-lead mt-3">Please enter your full name and folio number below to open your dividend statement securely.</p>
       ) : null}
-      <div className="tm-box mt-8">
+      <div className="tm-box mt-5">
         {unavailable ? (
           <p className="tm-small">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
         ) : verified ? (
           <div className="space-y-5">
-            <p className="tm-small">Identity verified. Download your encrypted statement. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
+            <p className="tm-small">Identity verified. Download your encrypted statement. It will ask for your folio number in uppercase, without spaces.</p>
             <a className="tm-button" href="/api/public/download">
               Download statement
               <ArrowRight size={18} aria-hidden="true" />
@@ -47,9 +47,9 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
           <VerifyForm token={token} />
         )}
       </div>
-      <div className="tm-box-blue mt-6">
-        <p className="text-[0.95rem] leading-6 text-tm-ink">
-          The Magnum Ice Cream Company uses your name and folio number to confirm this statement belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
+      <div className="tm-box-blue mt-4">
+        <p className="text-sm leading-6 text-tm-ink">
+          The Magnum Ice Cream Company uses your name and folio number to confirm this statement belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number.
         </p>
       </div>
     </PublicFrame>

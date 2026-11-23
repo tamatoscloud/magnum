@@ -34,7 +34,7 @@ export function VerifyForm({ token, endpoint = "/api/public/verify" }: { token: 
   }
 
   return (
-    <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)} noValidate>
       <p className="tm-error">* Required fields are shown with an asterisk.</p>
       <div className="space-y-2">
         <label className="tm-label tm-required" htmlFor="customerName">

@@ -34,7 +34,7 @@ function ResetForm() {
   }
 
   return (
-    <form className="tm-box mt-8 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="tm-box mt-5 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="space-y-2">
         <label className="tm-label" htmlFor="password">New password</label>
         <input className="tm-input" id="password" type="password" autoComplete="new-password" {...form.register("password")} />
@@ -49,7 +49,7 @@ function ResetForm() {
 export default function ResetPasswordPage() {
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="tm-heading mt-3">
+      <h1 className="tm-heading mt-2">
         <span className="tm-accent">Choose</span> a new password
       </h1>
       <Suspense>
