@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+/* Fallback for Neue Haas Grotesk Display when the licensed kit cannot load. */
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -11,9 +12,11 @@ const manrope = Manrope({
 /** Licensed TMICC web-font kit (Monotype). Families: JuanaSemiBoldItalic, NeueHaasGroteskDisplay55Roman, NeueHaasGroteskDisplay65Medium. */
 const BRAND_FONT_KIT = "https://cdn.fonts.net/kit/b37d69d5-8a3b-475c-92b5-c8505f768d2f/b37d69d5-8a3b-475c-92b5-c8505f768d2f.css";
 
+/* Fallback for Juana SemiBold Italic (display accent) when the licensed kit cannot load. */
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -40,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${manrope.variable} ${playfair.variable} h-full`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} h-full`}>
       <head>
         <link rel="preconnect" href="https://cdn.fonts.net" crossOrigin="anonymous" />
         <link rel="stylesheet" href={BRAND_FONT_KIT} />

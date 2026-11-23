@@ -4,9 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { PublicFrame } from "@/components/brand/public-frame";
 
 const schema = z.object({ email: z.string().trim().email() });
@@ -27,15 +24,16 @@ export default function ForgotPasswordPage() {
 
   return (
     <PublicFrame eyebrow="Staff access">
-      <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Reset password</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <form className="lux-card mt-8 space-y-4 rounded-3xl border border-line bg-card p-6 sm:p-8" onSubmit={form.handleSubmit(onSubmit)}>
+      <h1 className="tm-heading mt-3">
+        <span className="tm-accent">Reset</span> password
+      </h1>
+      <form className="tm-box mt-8 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
         <div className="space-y-2">
-          <Label htmlFor="email">Work email</Label>
-          <Input id="email" type="email" {...form.register("email")} />
+          <label className="tm-label" htmlFor="email">Work email</label>
+          <input className="tm-input" id="email" type="email" {...form.register("email")} />
         </div>
-        <Button type="submit">Send reset link</Button>
-        {message ? <p className="text-sm text-ink-soft">{message}</p> : null}
+        <button className="tm-button" type="submit">Send reset link</button>
+        {message ? <p className="tm-small">{message}</p> : null}
       </form>
     </PublicFrame>
   );

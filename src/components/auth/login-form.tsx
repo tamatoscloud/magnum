@@ -6,9 +6,6 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const schema = z.object({
   email: z.string().trim().email(),
@@ -36,19 +33,19 @@ export function LoginForm() {
   }
 
   return (
-    <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+    <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input id="email" type="email" autoComplete="username" {...form.register("email")} />
+        <label className="tm-label" htmlFor="email">Email</label>
+        <input className="tm-input" id="email" type="email" autoComplete="username" {...form.register("email")} />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <Input id="password" type="password" autoComplete="current-password" {...form.register("password")} />
+        <label className="tm-label" htmlFor="password">Password</label>
+        <input className="tm-input" id="password" type="password" autoComplete="current-password" {...form.register("password")} />
       </div>
-      {error ? <p className="text-sm text-danger">{error}</p> : null}
-      <Button className="w-full" type="submit" disabled={form.formState.isSubmitting}>
+      {error ? <p className="tm-error">{error}</p> : null}
+      <button className="tm-button w-full" type="submit" disabled={form.formState.isSubmitting}>
         {form.formState.isSubmitting ? "Signing in…" : "Sign in"}
-      </Button>
+      </button>
     </form>
   );
 }

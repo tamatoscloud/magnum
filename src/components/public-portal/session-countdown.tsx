@@ -33,9 +33,9 @@ export function SessionCountdown({ expiresAt }: { expiresAt: string }) {
   }, [expiresAt]);
 
   return (
-    <p className="text-xs text-ink-soft" role="timer" aria-live="off">
+    <p className="tm-small text-[0.95rem]" role="timer" aria-live="off">
       For your security this session ends in{" "}
-      <span className="font-semibold tabular-nums text-ink">{format(left)}</span>. After that you will need to verify your
+      <span className="font-medium tabular-nums text-tm-brown">{format(left)}</span>. After that you will need to verify your
       name and folio number again.
     </p>
   );

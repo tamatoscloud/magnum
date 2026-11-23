@@ -5,7 +5,7 @@ import { PORTAL_COOKIE } from "@/server/services/verification-service";
 import { VerifyForm } from "@/components/public-portal/verify-form";
 import { SessionCountdown } from "@/components/public-portal/session-countdown";
 import { PublicFrame } from "@/components/brand/public-frame";
-import { buttonVariants } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -25,16 +25,21 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
 
   return (
     <PublicFrame eyebrow="Shareholder services">
-      <h1 className="mt-3 font-serif text-4xl leading-tight text-ink sm:text-5xl">Access Your Dividend Statement</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <div className="lux-card mt-8 rounded-3xl border border-line bg-card p-6 sm:p-8">
+      <h1 className="tm-heading mt-3">
+        <span className="tm-accent">Access</span> your dividend statement
+      </h1>
+      {!unavailable && !verified ? (
+        <p className="tm-lead mt-4">Please enter your full name and folio number below to open your dividend statement securely.</p>
+      ) : null}
+      <div className="tm-box mt-8">
         {unavailable ? (
-          <p className="text-sm text-ink-soft">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
+          <p className="tm-small">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
         ) : verified ? (
-          <div className="space-y-4">
-            <p className="text-sm text-ink-soft">Identity verified. Download your encrypted statement. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
-            <a className={buttonVariants()} href="/api/public/download">
+          <div className="space-y-5">
+            <p className="tm-small">Identity verified. Download your encrypted statement. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
+            <a className="tm-button" href="/api/public/download">
               Download statement
+              <ArrowRight size={18} aria-hidden="true" />
             </a>
             {sessionExpiresAt ? <SessionCountdown expiresAt={sessionExpiresAt.toISOString()} /> : null}
           </div>
@@ -42,9 +47,11 @@ export default async function DividendLinkPage({ params }: { params: Promise<{ t
           <VerifyForm token={token} />
         )}
       </div>
-      <p className="mt-6 text-xs leading-5 text-ink-soft">
-        The Magnum Ice Cream Company uses your name and folio number to confirm this statement belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
-      </p>
+      <div className="tm-box-blue mt-6">
+        <p className="text-[0.95rem] leading-6 text-tm-ink">
+          The Magnum Ice Cream Company uses your name and folio number to confirm this statement belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
+        </p>
+      </div>
     </PublicFrame>
   );
 }

@@ -10,11 +10,11 @@
   /*
    * Brand typefaces (TMICC corporate): Neue Haas Grotesk Display 55 Roman / 65 Medium
    * for text and Juana SemiBold Italic for display headings, loaded from the licensed
-   * Monotype web kit in layout.tsx. Manrope / Playfair stay as fallbacks if the kit
+   * Monotype web kit in layout.tsx. Inter / Playfair stay as fallbacks if the kit
    * cannot load (for example on a domain not yet registered on the kit).
    */
-  --font-sans: "NeueHaasGroteskDisplay55Roman", var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
-  --font-sans-medium: "NeueHaasGroteskDisplay65Medium", "NeueHaasGroteskDisplay55Roman", var(--font-manrope), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: "NeueHaasGroteskDisplay55Roman", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-sans-medium: "NeueHaasGroteskDisplay65Medium", "NeueHaasGroteskDisplay55Roman", var(--font-inter), "Helvetica Neue", Arial, sans-serif;
   --font-serif: "JuanaSemiBoldItalic", var(--font-playfair), "Didot", Georgia, serif;
 
   /* Chocolate */
@@ -38,6 +38,20 @@
   --color-heart: #e0002f;
 
   --color-danger: #9b2a2a;
+
+  /*
+   * TMICC Pakistan corporate web palette (corporate.magnumicecream.pk), used on the
+   * shareholder-facing pages: near-black green ink, warm off-white page, beige and
+   * powder-blue boxes, green call-to-action, red for required/error text.
+   */
+  --color-tm-ink: #212721;
+  --color-tm-page: #fdf9f6;
+  --color-tm-beige: #f2e9db;
+  --color-tm-blue: #dde5ed;
+  --color-tm-green: #71b790;
+  --color-tm-green-hover: #5fa77f;
+  --color-tm-red: #e4002b;
+  --color-tm-brown: #8d3f2b;
   --color-ok: #2f6b3f;
   --color-warn: #8a5a12;
 
@@ -111,6 +125,156 @@
   .gold-rule {
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--color-gold-soft), transparent);
+  }
+
+  /* ---- TMICC Pakistan web components (shareholder pages) ---- */
+  .tm-page {
+    background: var(--color-tm-page);
+    color: var(--color-tm-ink);
+  }
+
+  /* "Contact us" style heading: medium grotesk with the first word in Juana italic. */
+  .tm-heading {
+    font-family: var(--font-sans-medium);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 2rem + 2.2vw, 3.85rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--color-tm-ink);
+  }
+
+  .tm-accent {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  .tm-lead {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--color-tm-ink);
+  }
+
+  @media (min-width: 640px) {
+    .tm-lead {
+      font-size: 1.28rem;
+    }
+  }
+
+  /* Rounded boxes: beige for the form, powder blue for information. */
+  .tm-box {
+    border-radius: 32px;
+    background: var(--color-tm-beige);
+    padding: 1.75rem 1.5rem;
+  }
+
+  .tm-box-blue {
+    border-radius: 32px;
+    background: var(--color-tm-blue);
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .tm-box {
+      padding: 2rem 2.25rem;
+    }
+    .tm-box-blue {
+      padding: 1.5rem 2.25rem;
+    }
+  }
+
+  .tm-label {
+    display: block;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-tm-ink);
+  }
+
+  /* Asterisk drawn in CSS so the accessible label stays "Full name". */
+  .tm-required::after {
+    content: " *";
+  }
+
+  .tm-input {
+    width: 100%;
+    height: 55px;
+    border-radius: 16px;
+    border: 0.8px solid var(--color-tm-ink);
+    background: #ffffff;
+    padding: 0.8rem 1.35rem;
+    font-size: 1.09rem;
+    line-height: 1.6;
+    color: #000000;
+    outline: none;
+    transition:
+      box-shadow 150ms ease,
+      border-color 150ms ease;
+  }
+
+  .tm-input:focus {
+    box-shadow: 0 0 0 3px rgb(113 183 144 / 0.45);
+  }
+
+  .tm-input[aria-invalid="true"] {
+    border-color: var(--color-tm-red);
+  }
+
+  /* Green pill call-to-action; pale-blue when disabled, as on the corporate form. */
+  .tm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    border-radius: 26px;
+    background: var(--color-tm-green);
+    color: var(--color-tm-ink);
+    padding: 0.8rem 1.6rem;
+    font-family: var(--font-sans-medium);
+    font-weight: 500;
+    font-size: 1.14rem;
+    line-height: 1;
+    transition:
+      background-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .tm-button:hover {
+    background: var(--color-tm-green-hover);
+  }
+
+  .tm-button:active {
+    transform: scale(0.98);
+  }
+
+  .tm-button:disabled {
+    background: var(--color-tm-blue);
+    color: rgb(16 16 16 / 0.3);
+    cursor: default;
+    transform: none;
+  }
+
+  .tm-error {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-family: var(--font-sans-medium);
+    font-weight: 500;
+    color: var(--color-tm-red);
+  }
+
+  .tm-small {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-tm-ink);
+  }
+
+  .tm-eyebrow {
+    font-family: var(--font-sans-medium);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--color-tm-brown);
   }
 
   .chocolate-surface {

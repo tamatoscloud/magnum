@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { VerifyForm } from "@/components/public-portal/verify-form";
 import { SessionCountdown } from "@/components/public-portal/session-countdown";
 import { PublicFrame } from "@/components/brand/public-frame";
-import { buttonVariants } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/db/prisma";
 import { hashToken, isPast } from "@/lib/security/tokens";
 import { CAMPAIGN_COOKIE } from "@/server/services/campaign-portal";
@@ -25,16 +25,21 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
 
   return (
     <PublicFrame eyebrow="Shareholder services">
-      <h1 className="mt-3 font-serif text-4xl leading-tight text-ink sm:text-5xl">Access Your Annual Report</h1>
-      <div className="gold-rule mt-6 max-w-[8rem]" />
-      <div className="lux-card mt-8 rounded-3xl border border-line bg-card p-6 sm:p-8">
+      <h1 className="tm-heading mt-3">
+        <span className="tm-accent">Access</span> your annual report
+      </h1>
+      {!unavailable && !verified ? (
+        <p className="tm-lead mt-4">Please enter your full name and folio number below to open your annual report securely.</p>
+      ) : null}
+      <div className="tm-box mt-8">
         {unavailable ? (
-          <p className="text-sm text-ink-soft">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
+          <p className="tm-small">This link is no longer available. Contact The Magnum Ice Cream Company shareholder services if you need a new one.</p>
         ) : verified ? (
-          <div className="space-y-4">
-            <p className="text-sm text-ink-soft">Identity verified. Download your encrypted annual report. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
-            <a className={buttonVariants()} href="/api/public/campaign/download">
+          <div className="space-y-5">
+            <p className="tm-small">Identity verified. Download your encrypted annual report. It will ask for your folio number in uppercase, without spaces. Leading zeros are part of the password.</p>
+            <a className="tm-button" href="/api/public/campaign/download">
               Download annual report
+              <ArrowRight size={18} aria-hidden="true" />
             </a>
             {sessionExpiresAt ? <SessionCountdown expiresAt={sessionExpiresAt.toISOString()} /> : null}
           </div>
@@ -42,9 +47,11 @@ export default async function CampaignPortalPage({ params }: { params: Promise<{
           <VerifyForm token={token} endpoint="/api/public/campaign/verify" />
         )}
       </div>
-      <p className="mt-6 text-xs leading-5 text-ink-soft">
-        The Magnum Ice Cream Company uses your name and folio number to confirm this report belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
-      </p>
+      <div className="tm-box-blue mt-6">
+        <p className="text-[0.95rem] leading-6 text-tm-ink">
+          The Magnum Ice Cream Company uses your name and folio number to confirm this report belongs to you. This is not multi-factor authentication. Do not forward this link. The PDF password is your folio number and can be guessed if the folio is short.
+        </p>
+      </div>
     </PublicFrame>
   );
 }
